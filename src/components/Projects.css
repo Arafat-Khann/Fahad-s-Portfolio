@@ -1,0 +1,146 @@
+.projects-container {
+  height: 400vh; /* Determines how long the horizontal scroll lasts */
+  position: relative;
+  background: var(--color-surface-2);
+}
+
+.projects-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.projects-header {
+  position: absolute;
+  top: 15vh;
+  left: 5%;
+  z-index: 10;
+}
+
+.projects-scroll-area {
+  display: flex;
+  gap: 5vw;
+  padding: 0 5vw; /* Simplified padding since we precisely calculate travel */
+  align-items: center;
+  width: max-content;
+  position: relative;
+}
+
+.project-card {
+  flex: 0 0 600px;
+  height: 500px;
+  border-radius: var(--radius-lg);
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+  will-change: transform, opacity;
+}
+
+.project-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at top right, rgba(238,190,250,0.1), transparent 50%);
+  pointer-events: none;
+}
+
+.project-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: auto;
+}
+
+.project-category {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-accent-1);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.project-link {
+  background: none;
+  border: none;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-surface-1);
+  box-shadow: var(--shadow-sm);
+}
+
+.project-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.project-desc {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  margin-bottom: 2rem;
+  max-width: 90%;
+}
+
+.project-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tech-pill {
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-pill);
+  background: rgba(0,0,0,0.03);
+  border: 1px solid rgba(0,0,0,0.05);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+/* Focused card styling */
+.project-card.focused {
+  filter: brightness(1.08) saturate(1.04);
+  box-shadow: 0 24px 48px rgba(99,102,241,0.12);
+  z-index: 30;
+}
+
+.project-card.focused::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: 0 0 36px rgba(99,102,241,0.12);
+  border-radius: inherit;
+}
+
+@media (max-width: 768px) {
+  .project-card {
+    flex: 0 0 85vw;
+    height: 450px;
+    padding: 2rem;
+  }
+  
+  .project-title {
+    font-size: 2rem;
+  }
+}

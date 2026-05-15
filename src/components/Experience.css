@@ -1,0 +1,132 @@
+.experience-section {
+  padding: 10% 5%;
+  background: var(--color-bg);
+  position: relative;
+  overflow: hidden;
+}
+
+.experience-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.section-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 10vh;
+  letter-spacing: -0.02em;
+}
+
+.timeline-line {
+  position: absolute;
+  top: 15vh;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.05), transparent);
+  transform: translateX(-50%);
+  z-index: 0;
+}
+
+.experience-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  position: relative;
+  z-index: 10;
+}
+
+.exp-card {
+  width: calc(50% - 40px);
+  padding: 2.5rem;
+  border-radius: var(--radius-md);
+  position: relative;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.28s ease, transform 0.18s ease, opacity 0.18s ease;
+  will-change: transform, opacity;
+}
+
+/* Reduce expensive backdrop blur on experience cards for smoother hover */
+.exp-card.glass-panel {
+  background: rgba(255,255,255,0.78);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.exp-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.exp-card.left {
+  align-self: flex-start;
+}
+
+.exp-card.right {
+  align-self: flex-end;
+}
+
+.exp-indicator {
+  position: absolute;
+  top: 3rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px currentColor;
+}
+
+.exp-card.left .exp-indicator {
+  right: -46px; /* Position on the timeline */
+}
+
+.exp-card.right .exp-indicator {
+  left: -46px; /* Position on the timeline */
+}
+
+.exp-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.exp-role {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.exp-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.exp-company {
+  color: var(--color-accent-1);
+}
+
+.exp-desc {
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .timeline-line {
+    left: 20px;
+  }
+  
+  .exp-card {
+    width: calc(100% - 40px);
+    align-self: flex-end !important;
+  }
+  
+  .exp-card.left .exp-indicator,
+  .exp-card.right .exp-indicator {
+    left: -26px;
+  }
+}

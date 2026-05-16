@@ -3,8 +3,8 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import './Skills.css';
 
 const skills = [
-  "Python", "JavaScript", "TypeScript", "React", 
-  "Next.js", "Node.js", "SQL", "Git", 
+  "Python", "JavaScript", "TypeScript", "React",
+  "Next.js", "Node.js", "SQL", "Git",
   "REST APIs", "Machine Learning", "NLP", "LLMs"
 ];
 
@@ -26,12 +26,12 @@ export default function Skills() {
           {skills.map((skill, index) => (
             <motion.div
               key={skill}
-              className="skill-item glass-panel"
+              className="skill-item"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: index * 0.05 }}
-              whileHover={{ scale: 1.05, y: -5, backgroundColor: 'rgba(255,255,255,0.9)' }}
+              whileHover={{ scale: 1.05, y: -5 }}
             >
               {skill}
             </motion.div>

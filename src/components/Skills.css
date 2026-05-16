@@ -1,7 +1,7 @@
 .skills-section {
   min-height: 80vh;
   padding: 10% 5%;
-  background: var(--color-bg);
+  background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -25,14 +25,16 @@
   border-radius: var(--radius-pill);
   font-size: 1.1rem;
   font-weight: 500;
-  color: var(--color-text-primary);
+  color: #ffffff;
+  background: linear-gradient(180deg, #143A5A 0%, #35678C 55%, #4C7A9E 100%);
   box-shadow: var(--shadow-sm);
   cursor: default;
-  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
 }
 
 .skill-item:hover {
-  box-shadow: var(--glow);
+  box-shadow: var(--shadow-md);
 }
 
 @media (max-width: 768px) {

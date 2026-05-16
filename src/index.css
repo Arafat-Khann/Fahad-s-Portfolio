@@ -12,6 +12,7 @@
   --color-accent-1: #a5d8ff; /* Light blue */
   --color-accent-2: #eebefa; /* Light violet */
   --color-accent-gradient: linear-gradient(135deg, var(--color-accent-1) 0%, var(--color-accent-2) 100%);
+  --gradient-brand: linear-gradient(180deg, #143A5A 0%, #35678C 55%, #4C7A9E 100%);
   
   /* Depth & Shadows */
   --shadow-sm: 0 4px 12px rgba(0,0,0,0.03);
@@ -87,9 +88,13 @@ html.lenis, html.lenis body {
 }
 
 .text-gradient {
-  background: var(--color-accent-gradient);
+  background: var(--gradient-brand);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: transparent;
+}
+
+.gradient-fill {
+  background: var(--gradient-brand);
 }

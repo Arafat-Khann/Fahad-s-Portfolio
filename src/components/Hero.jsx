@@ -1,5 +1,6 @@
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import ScrollArrow from './ScrollArrow';
 import './Hero.css';
 
 export default function Hero() {
@@ -21,7 +22,7 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="hero-badge"
         >
-          Available for Opportunities
+          Open to Work
         </motion.div>
         
         <motion.h1 
@@ -39,7 +40,7 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="hero-subtitle text-gradient"
         >
-          AI & Software Engineering Intern
+          AI and Software Engineering Intern
         </motion.h2>
         
         <motion.p
@@ -50,6 +51,8 @@ export default function Hero() {
         >
           Bridging the gap between intelligent systems and human-centric design.
         </motion.p>
+
+        <ScrollArrow />
       </motion.div>
 
       {/* Decorative background element */}

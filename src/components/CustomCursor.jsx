@@ -3,7 +3,7 @@ import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export default function CustomCursor() {
   const [isVisible, setIsVisible] = useState(false);
-  
+
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
@@ -19,9 +19,7 @@ export default function CustomCursor() {
     };
 
     window.addEventListener('mousemove', moveCursor);
-    return () => {
-      window.removeEventListener('mousemove', moveCursor);
-    };
+    return () => window.removeEventListener('mousemove', moveCursor);
   }, [cursorX, cursorY, isVisible]);
 
   return (
@@ -35,11 +33,11 @@ export default function CustomCursor() {
         width: 32,
         height: 32,
         borderRadius: '50%',
-        backgroundColor: 'rgba(238, 190, 250, 0.4)', // Light violet with opacity
-        border: '1px solid rgba(165, 216, 255, 0.8)', // Light blue border
+        backgroundColor: 'rgba(150, 150, 150, 0.4)',
+        border: '1px solid #888888',
+        boxShadow: '0 0 20px rgba(136, 136, 136, 0.25)',
         pointerEvents: 'none',
         zIndex: 99999,
-        mixBlendMode: 'difference',
         opacity: isVisible ? 1 : 0,
       }}
       transition={{ opacity: { duration: 0.2 } }}

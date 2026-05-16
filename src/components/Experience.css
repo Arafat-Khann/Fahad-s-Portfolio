@@ -73,7 +73,14 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  box-shadow: 0 0 10px currentColor;
+  background-color: #6B7280;
+  box-shadow: none;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.exp-indicator.active {
+  background-color: #9CA3AF;
+  transform: scale(1.15);
 }
 
 .exp-card.left .exp-indicator {
@@ -106,7 +113,7 @@
 }
 
 .exp-company {
-  color: var(--color-accent-1);
+  color: var(--color-text-primary);
 }
 
 .exp-desc {

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Knight Glass</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        /* Demo backdrop only — canvas/WebGL clear alpha stays 0 */
+        background: #000000;
+      }
+      #knight-canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="knight-canvas"></canvas>
+    <script type="module">
+      import { KnightScene } from './src/KnightScene.js';
+
+      const canvas = document.getElementById('knight-canvas');
+      const knight = new KnightScene(canvas);
+      window.__knightScene = knight;
+    </script>
+  </body>
+</html>

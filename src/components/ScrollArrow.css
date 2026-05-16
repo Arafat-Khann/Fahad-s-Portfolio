@@ -1,0 +1,28 @@
+.scroll-arrow {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+  width: 28px;
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--color-text-secondary);
+  opacity: 0.65;
+  cursor: pointer;
+  transition: opacity 0.4s ease;
+  animation: scrollBounce 1.5s ease-in-out infinite;
+}
+
+.scroll-arrow.visible {
+  opacity: 0.65;
+  pointer-events: auto;
+}
+
+.scroll-arrow.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}

@@ -1,0 +1,353 @@
+/* Apple-style dual-row leadership carousel — left-aligned, compact */
+
+.leadership-section {
+  --lead-gutter: clamp(1.25rem, 5vw, 3rem);
+  padding: clamp(3rem, 8vh, 5rem) 0 clamp(2.5rem, 5vh, 4rem);
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.leadership-header {
+  max-width: 1200px;
+  margin: 0 auto 1.75rem;
+  padding: 0 var(--lead-gutter);
+  text-align: center;
+}
+
+.leadership-title {
+  font-size: clamp(1.85rem, 4.5vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  color: #1d1d1f;
+}
+
+.leadership-stage {
+  cursor: grab;
+  touch-action: pan-x;
+  user-select: none;
+}
+
+.leadership-stage:active {
+  cursor: grabbing;
+}
+
+.lead-row {
+  overflow: hidden;
+  width: 100%;
+  padding-left: var(--lead-gutter);
+}
+
+.lead-row-hero {
+  margin-bottom: 10px;
+}
+
+.lead-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  padding-right: var(--lead-gutter);
+  transition: transform 0.7s cubic-bezier(0.25, 0.1, 0.25, 1);
+  will-change: transform;
+}
+
+/* —— Hero (top) cards —— */
+.lead-hero-card {
+  position: relative;
+  flex-shrink: 0;
+  width: clamp(200px, 22vw, 300px);
+  height: clamp(260px, 32vw, 360px);
+  margin-right: 10px;
+  border-radius: 16px;
+  overflow: hidden;
+  transform: scale(0.96);
+  opacity: 0.78;
+  transition:
+    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s ease;
+}
+
+.lead-hero-card.is-active {
+  transform: scale(1);
+  opacity: 1;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.14);
+}
+
+.lead-hero-card.is-active:hover {
+  transform: scale(1.01);
+}
+
+.lead-hero-media {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.lead-hero-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.72) 0%,
+    rgba(0, 0, 0, 0.25) 42%,
+    rgba(0, 0, 0, 0.08) 100%
+  );
+  pointer-events: none;
+}
+
+.lead-hero-tag {
+  position: absolute;
+  top: 0.9rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.9);
+  z-index: 2;
+}
+
+.lead-hero-titles {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  padding: 0 1rem;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.lead-hero-line1 {
+  display: block;
+  font-size: clamp(0.85rem, 1.8vw, 1rem);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.92);
+  letter-spacing: -0.01em;
+  margin-bottom: 0.1rem;
+}
+
+.lead-hero-line2 {
+  display: block;
+  font-size: clamp(1.35rem, 3.2vw, 1.85rem);
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.lead-hero-footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.9rem 1rem 1.1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.5rem 0.65rem;
+  z-index: 2;
+}
+
+.lead-hero-caption {
+  flex: 1;
+  min-width: 100px;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.88);
+  margin: 0;
+}
+
+/* —— Mini (bottom) cards —— */
+.lead-mini-card {
+  position: relative;
+  flex-shrink: 0;
+  width: clamp(180px, 19vw, 260px);
+  height: clamp(110px, 14vw, 140px);
+  margin-right: 10px;
+  border-radius: 14px;
+  overflow: hidden;
+  opacity: 0.82;
+  transition:
+    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s ease;
+}
+
+.lead-mini-card.is-active {
+  opacity: 1;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.lead-mini-card:hover {
+  transform: translateY(-2px);
+}
+
+.lead-mini-media {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.lead-mini-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.75) 0%,
+    rgba(0, 0, 0, 0.2) 55%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.lead-mini-tag {
+  position: absolute;
+  top: 0.65rem;
+  left: 0.7rem;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  z-index: 2;
+}
+
+.lead-mini-copy {
+  position: absolute;
+  left: 0.7rem;
+  right: 4.75rem;
+  bottom: 0.65rem;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.lead-mini-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 0.15rem;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lead-mini-desc {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.78);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* —— Shared pill CTA —— */
+.lead-pill-cta {
+  flex-shrink: 0;
+  padding: 0.32rem 0.7rem;
+  border: none;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #1d1d1f;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.lead-pill-cta:hover {
+  background: #ffffff;
+  transform: scale(1.04);
+}
+
+.lead-pill-cta--mini {
+  position: absolute;
+  right: 0.65rem;
+  bottom: 0.65rem;
+  z-index: 3;
+  font-size: 0.65rem;
+  padding: 0.28rem 0.6rem;
+}
+
+/* —— Pagination dots —— */
+.lead-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 1.25rem;
+  padding: 0 var(--lead-gutter);
+}
+
+.lead-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lead-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 9999px;
+  background: #d1d5db;
+  cursor: pointer;
+  transition:
+    width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    background 0.25s ease;
+}
+
+.lead-dot.is-active {
+  width: 24px;
+  background: #6b7280;
+}
+
+.lead-dot:hover:not(.is-active) {
+  background: #9ca3af;
+}
+
+/* —— Responsive —— */
+@media (max-width: 768px) {
+  .leadership-header {
+    margin-bottom: 1.25rem;
+  }
+
+  .lead-hero-card {
+    width: min(72vw, 260px);
+    height: min(58vw, 320px);
+  }
+
+  .lead-hero-card:not(.is-active) {
+    transform: scale(0.95);
+    opacity: 0.65;
+  }
+
+  .lead-mini-card {
+    width: min(65vw, 220px);
+    height: 120px;
+  }
+
+  .lead-hero-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (min-width: 1280px) {
+  .lead-hero-card {
+    width: 300px;
+    height: 360px;
+  }
+
+  .lead-mini-card {
+    width: 260px;
+    height: 140px;
+  }
+}

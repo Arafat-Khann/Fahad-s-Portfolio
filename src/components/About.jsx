@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import KnightScene from '../KnightScene.jsx';
 import './About.css';
 
 const words = [
@@ -16,13 +17,13 @@ export default function About() {
   });
 
   return (
-    <section ref={containerRef} className="about-section">
+    <section id="about" ref={containerRef} className="about-section">
       <div className="about-content">
         <p className="about-text">
           {words.map((word, i) => {
             const start = i / words.length;
             const end = start + (1 / words.length);
-            
+
             // eslint-disable-next-line react-hooks/rules-of-hooks
             const opacity = useTransform(scrollYProgress, [start, end], [0.1, 1]);
             // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -35,6 +36,10 @@ export default function About() {
             );
           })}
         </p>
+
+        <div className="about-knight" aria-hidden="true">
+          <KnightScene />
+        </div>
       </div>
     </section>
   );

@@ -5,6 +5,7 @@
   padding: clamp(3rem, 8vh, 5rem) 0 clamp(2.5rem, 5vh, 4rem);
   background: #ffffff;
   overflow: hidden;
+  contain: layout paint;
 }
 
 .leadership-header {
@@ -24,7 +25,7 @@
 
 .leadership-stage {
   cursor: grab;
-  touch-action: pan-x;
+  touch-action: pan-y;
   user-select: none;
 }
 
@@ -47,7 +48,7 @@
   align-items: center;
   width: max-content;
   padding-right: var(--lead-gutter);
-  transition: transform 0.7s cubic-bezier(0.25, 0.1, 0.25, 1);
+  transition: transform 0.28s ease-out;
   will-change: transform;
 }
 
@@ -63,15 +64,14 @@
   transform: scale(0.96);
   opacity: 0.78;
   transition:
-    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 0.35s ease;
+    transform 0.28s ease-out,
+    opacity 0.28s ease-out;
 }
 
 .lead-hero-card.is-active {
   transform: scale(1);
   opacity: 1;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.14);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 .lead-hero-card.is-active:hover {
@@ -174,14 +174,13 @@
   overflow: hidden;
   opacity: 0.82;
   transition:
-    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 0.35s ease;
+    transform 0.28s ease-out,
+    opacity 0.28s ease-out;
 }
 
 .lead-mini-card.is-active {
   opacity: 1;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
 }
 
 .lead-mini-card:hover {

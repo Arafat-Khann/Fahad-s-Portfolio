@@ -154,7 +154,6 @@ export default function LeadershipCarousel() {
     }
 
     const newMetrics = { heroW, heroGap, miniW, miniGap };
-    // Only update state if a meaningful change occurred to avoid extra re-renders
     const prev = measure.metricsRef || metrics;
     if (
       prev.heroW !== newMetrics.heroW ||
@@ -169,7 +168,6 @@ export default function LeadershipCarousel() {
 
   useEffect(() => {
     let rafId = null;
-    // throttle measure with rAF to avoid layout thrashing
     const scheduled = () => {
       if (rafId) cancelAnimationFrame(rafId);
       rafId = requestAnimationFrame(() => measure());
@@ -228,7 +226,7 @@ export default function LeadershipCarousel() {
   }, [clampIndex]);
 
   return (
-    <section className="leadership-section" aria-label="Leadership Activities">
+    <section id="leadership" className="leadership-section" aria-label="Leadership Activities">
       <div className="leadership-header">
         <h2 className="leadership-title">Leadership Activities.</h2>
       </div>

@@ -129,7 +129,7 @@ export default function Projects() {
   };
 
   return (
-    <section className="projects-section">
+    <section id="projects" className="projects-section">
       <div className="projects-inner">
         <div className="projects-header">
           <h2 className="section-title">Selected Works</h2>

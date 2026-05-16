@@ -76,7 +76,7 @@ export default function Experience() {
   }, [scrollYProgress]);
 
   return (
-    <section ref={containerRef} className="experience-section">
+    <section id="experience" ref={containerRef} className="experience-section">
       <div className="experience-container">
         <h2 className="section-title">Experience</h2>
         <motion.div className="timeline-line" />

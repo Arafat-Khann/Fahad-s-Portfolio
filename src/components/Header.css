@@ -1,0 +1,113 @@
+.site-header {
+  position: sticky;
+  top: 1rem;
+  z-index: 1000;
+  width: min(calc(100% - 2rem), 1200px);
+  margin: 0 auto;
+  padding: 0.9rem 1.1rem;
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.site-brand {
+  text-decoration: none;
+  color: var(--color-text-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-left: auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.site-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.site-nav-link {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 1rem;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  color: var(--color-text-primary);
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  font-size: 0.88rem;
+  font-weight: 500;
+  line-height: 1;
+  transform: translateZ(0);
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, color 180ms ease;
+  white-space: nowrap;
+}
+
+.site-nav-link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(165, 216, 255, 0.28), rgba(238, 190, 250, 0.24));
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.site-nav-link span {
+  position: relative;
+  z-index: 1;
+}
+
+.site-nav-link.is-cta {
+  color: var(--color-surface-1);
+  background: var(--color-text-primary);
+}
+
+.site-nav-link:hover,
+.site-nav-link:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.site-nav-link:hover::before,
+.site-nav-link:focus-visible::before {
+  opacity: 1;
+}
+
+.site-nav-link:focus-visible,
+.site-brand:focus-visible {
+  outline: 2px solid rgba(52, 103, 140, 0.35);
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .site-header {
+    width: min(calc(100% - 1rem), 1200px);
+    padding: 0.8rem 0.9rem;
+    top: 0.5rem;
+  }
+
+  .site-brand {
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  .site-nav {
+    gap: 0.45rem;
+  }
+
+  .site-nav-link {
+    padding: 0.62rem 0.84rem;
+    font-size: 0.8rem;
+  }
+}

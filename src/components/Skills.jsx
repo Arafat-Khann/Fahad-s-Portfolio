@@ -19,7 +19,7 @@ export default function Skills() {
   const opacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
 
   return (
-    <section ref={containerRef} className="skills-section">
+    <section id="skills" ref={containerRef} className="skills-section">
       <motion.div style={{ y, opacity }} className="skills-container">
         <h2 className="section-title">Core Competencies</h2>
         <div className="skills-grid">

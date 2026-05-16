@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSmoothScroll } from './hooks/useSmoothScroll';
+import Header from './components/Header';
 import CustomCursor from './components/CustomCursor';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -17,7 +18,8 @@ function App() {
   return (
     <>
       <CustomCursor />
-      <main>
+      <Header />
+      <main id="top">
         <Hero />
         <About />
         <Experience />

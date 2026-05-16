@@ -153,17 +153,36 @@ export default function LeadershipCarousel() {
       miniGap = parseFloat(miniStyle.marginRight) || 12;
     }
 
-    setMetrics({ heroW, heroGap, miniW, miniGap });
+    const newMetrics = { heroW, heroGap, miniW, miniGap };
+    // Only update state if a meaningful change occurred to avoid extra re-renders
+    const prev = measure.metricsRef || metrics;
+    if (
+      prev.heroW !== newMetrics.heroW ||
+      prev.heroGap !== newMetrics.heroGap ||
+      prev.miniW !== newMetrics.miniW ||
+      prev.miniGap !== newMetrics.miniGap
+    ) {
+      measure.metricsRef = newMetrics;
+      setMetrics(newMetrics);
+    }
   }, []);
 
   useEffect(() => {
-    measure();
-    window.addEventListener('resize', measure);
-    const ro = new ResizeObserver(measure);
+    let rafId = null;
+    // throttle measure with rAF to avoid layout thrashing
+    const scheduled = () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => measure());
+    };
+
+    scheduled();
+    window.addEventListener('resize', scheduled);
+    const ro = new ResizeObserver(scheduled);
     if (wrapperRef.current) ro.observe(wrapperRef.current);
     return () => {
-      window.removeEventListener('resize', measure);
+      window.removeEventListener('resize', scheduled);
       ro.disconnect();
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, [measure]);
 
@@ -229,7 +248,7 @@ export default function LeadershipCarousel() {
             ref={heroTrackRef}
             className="lead-track lead-track-hero"
             style={{
-              transform: `translateX(-${heroOffset}px)`,
+              transform: `translate3d(-${heroOffset}px, 0, 0)`,
             }}
           >
             {items.map((item, index) => (
@@ -264,7 +283,7 @@ export default function LeadershipCarousel() {
           <div
             className="lead-track lead-track-mini"
             style={{
-              transform: `translateX(-${miniOffset}px)`,
+              transform: `translate3d(-${miniOffset}px, 0, 0)`,
             }}
           >
             {items.map((item, index) => (

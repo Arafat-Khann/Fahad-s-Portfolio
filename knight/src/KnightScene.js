@@ -16,10 +16,8 @@ const COLOR_MID = 0x35678c;
 const COLOR_BRIGHT = 0x4c7a9e;
 
 const MODEL_HEIGHT = 0.58;
-const DRAG_SENSITIVITY = 0.009;
-const USER_RETURN_SPEED = 5.5;
+const DRAG_SENSITIVITY = 0.012;
 const IDLE_SPIN_SPEED = 0.18;
-const SETTLED_THRESHOLD = 0.02;
 const FLOAT_AMP = 0.012;
 const FLOAT_SPEED = 0.55;
 
@@ -38,15 +36,8 @@ const HOME_QUAT = new THREE.Quaternion().setFromEuler(
 
 const _spinQuat = new THREE.Quaternion();
 const _finalQuat = new THREE.Quaternion();
-
-function normalizeAngle(angle) {
-  return Math.atan2(Math.sin(angle), Math.cos(angle));
-}
-
-function lerpAngle(current, target, t) {
-  const delta = normalizeAngle(target - current);
-  return current + delta * t;
-}
+const _spinArm = new THREE.Vector3(0, 0.22, 0.06);
+const _spinTangent = new THREE.Vector3();
 
 /**
  * Standalone frosted-glass chess knight on a transparent WebGL canvas.
@@ -68,9 +59,10 @@ export class KnightScene {
     this._homeY = 0.42;
     this._isDragging = false;
     this._lastPointerX = 0;
+    this._lastPointerY = 0;
     this._userAngle = 0;
-    this._userTargetAngle = 0;
     this._idleAngle = 0;
+    this._spinScreenDir = new THREE.Vector2(0, 1);
     this._clock = new THREE.Clock();
     this._disposed = false;
     this.knight = null;
@@ -105,6 +97,7 @@ export class KnightScene {
       }
       this.knight.material = this.material;
       this.scene.add(this.knight);
+      updateSpinScreenDirection(this);
       this._raf = requestAnimationFrame(() => animationLoop(this));
     } catch (err) {
       console.error('KnightScene: failed to load knight model', err);
@@ -124,6 +117,7 @@ export class KnightScene {
     const pr = this.options.pixelRatio;
     this.renderer.setPixelRatio(pr);
     this.composer.setPixelRatio(pr);
+    updateSpinScreenDirection(this);
   }
 
   dispose() {
@@ -131,9 +125,9 @@ export class KnightScene {
     cancelAnimationFrame(this._raf);
     window.removeEventListener('resize', this._onResize);
     this.canvas.removeEventListener('pointerdown', this._onPointerDown);
-    this.canvas.removeEventListener('pointermove', this._onPointerMove);
-    this.canvas.removeEventListener('pointerup', this._onPointerUp);
-    this.canvas.removeEventListener('pointercancel', this._onPointerUp);
+    window.removeEventListener('pointermove', this._onPointerMove);
+    window.removeEventListener('pointerup', this._onPointerUp);
+    window.removeEventListener('pointercancel', this._onPointerUp);
 
     this.knight?.geometry?.dispose();
     this.material.dispose();
@@ -339,39 +333,83 @@ function setupPostProcessing(renderer, scene, camera, options) {
   return composer;
 }
 
+/** Maps on-screen drag (px) to rotation around the tilted spin axis. */
+export function updateSpinScreenDirection(ctx) {
+  const rect = ctx.canvas.getBoundingClientRect();
+  const w = rect.width;
+  const h = rect.height;
+  if (!w || !h) return;
+
+  _spinTangent.crossVectors(SPIN_AXIS, _spinArm).normalize();
+  _spinTangent.transformDirection(ctx.camera.matrixWorldInverse);
+
+  const pixDx = _spinTangent.x * w;
+  const pixDy = -_spinTangent.y * h;
+
+  const len = Math.hypot(pixDx, pixDy);
+  if (len < 1e-5) {
+    ctx._spinScreenDir.set(0, 1);
+    return;
+  }
+  ctx._spinScreenDir.set(pixDx / len, pixDy / len);
+}
+
+function pointerDeltaToSpin(dx, dy, ctx, canvas) {
+  const rect = canvas.getBoundingClientRect();
+  const scale = DRAG_SENSITIVITY * Math.max(rect.width / 380, 0.75);
+
+  const alongAxis = (dx * ctx._spinScreenDir.x + dy * ctx._spinScreenDir.y) * scale;
+  const vertical = dy * scale;
+
+  return alongAxis + vertical;
+}
+
 export function setupInteraction(ctx) {
   const { canvas } = ctx;
+
+  const onPointerMove = (e) => {
+    if (!ctx._isDragging) return;
+    e.preventDefault();
+
+    const dx = e.clientX - ctx._lastPointerX;
+    const dy = e.clientY - ctx._lastPointerY;
+    ctx._lastPointerX = e.clientX;
+    ctx._lastPointerY = e.clientY;
+
+    ctx._userAngle += pointerDeltaToSpin(dx, dy, ctx, canvas);
+  };
+
+  const endDrag = (e) => {
+    if (!ctx._isDragging) return;
+    ctx._isDragging = false;
+    ctx._idleAngle += ctx._userAngle;
+    ctx._userAngle = 0;
+    window.removeEventListener('pointermove', onPointerMove);
+    window.removeEventListener('pointerup', endDrag);
+    window.removeEventListener('pointercancel', endDrag);
+    if (canvas.hasPointerCapture?.(e.pointerId)) {
+      canvas.releasePointerCapture(e.pointerId);
+    }
+    canvas.style.cursor = 'grab';
+  };
 
   ctx._onPointerDown = (e) => {
     if (e.button !== 0) return;
     ctx._isDragging = true;
+    updateSpinScreenDirection(ctx);
     ctx._lastPointerX = e.clientX;
+    ctx._lastPointerY = e.clientY;
     canvas.setPointerCapture(e.pointerId);
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', endDrag);
+    window.addEventListener('pointercancel', endDrag);
     canvas.style.cursor = 'grabbing';
   };
 
-  ctx._onPointerMove = (e) => {
-    if (!ctx._isDragging) return;
-
-    const dx = e.clientX - ctx._lastPointerX;
-    ctx._lastPointerX = e.clientX;
-    ctx._userAngle += dx * DRAG_SENSITIVITY;
-    ctx._userTargetAngle = ctx._userAngle;
-  };
-
-  ctx._onPointerUp = (e) => {
-    if (!ctx._isDragging) return;
-    ctx._isDragging = false;
-    ctx._userAngle = normalizeAngle(ctx._userAngle);
-    ctx._userTargetAngle = 0;
-    canvas.releasePointerCapture(e.pointerId);
-    canvas.style.cursor = 'grab';
-  };
+  ctx._onPointerUp = endDrag;
+  ctx._onPointerMove = onPointerMove;
 
   canvas.addEventListener('pointerdown', ctx._onPointerDown);
-  canvas.addEventListener('pointermove', ctx._onPointerMove);
-  canvas.addEventListener('pointerup', ctx._onPointerUp);
-  canvas.addEventListener('pointercancel', ctx._onPointerUp);
   canvas.style.touchAction = 'none';
   canvas.style.cursor = 'grab';
 }
@@ -398,16 +436,6 @@ function updateMotion(ctx, t, dt) {
   knight.position.set(0, ctx._homeY + floatY, 0);
 
   if (!ctx._isDragging) {
-    const returnFactor = 1 - Math.exp(-USER_RETURN_SPEED * dt);
-    ctx._userAngle = lerpAngle(ctx._userAngle, ctx._userTargetAngle, returnFactor);
-  }
-
-  const settled =
-    !ctx._isDragging &&
-    Math.abs(ctx._userAngle) < SETTLED_THRESHOLD &&
-    Math.abs(ctx._userTargetAngle) < SETTLED_THRESHOLD;
-
-  if (settled) {
     ctx._idleAngle += dt * IDLE_SPIN_SPEED;
   }
 

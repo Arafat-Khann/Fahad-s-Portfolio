@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 
 /**
- * Horizontal trackpad / mouse-wheel scrolling on a container.
- * onDelta(dx): positive = scroll content right, negative = scroll left.
+ * Horizontal trackpad / mouse-wheel on a container.
+ * Never blocks clearly vertical scroll (fixes Lenis / page scroll jank).
  */
 export function useHorizontalWheel(containerRef, onDelta, enabled = true) {
   const onDeltaRef = useRef(onDelta);
@@ -17,16 +17,21 @@ export function useHorizontalWheel(containerRef, onDelta, enabled = true) {
       let dx = e.deltaX;
       let dy = e.deltaY;
 
-      // Shift + vertical wheel → treat as horizontal
       if (e.shiftKey && Math.abs(dy) > Math.abs(dx)) {
         dx = dy;
         dy = 0;
       }
 
-      const isHorizontal =
-        Math.abs(dx) > Math.abs(dy) * 0.55 && Math.abs(dx) > 0.5;
+      // Let vertical page scroll pass through — critical for smooth Lenis
+      const isClearlyVertical =
+        Math.abs(dy) >= Math.abs(dx) || Math.abs(dy) > 4;
 
-      if (!isHorizontal) return;
+      const isClearlyHorizontal =
+        !isClearlyVertical &&
+        Math.abs(dx) > Math.abs(dy) * 1.75 &&
+        Math.abs(dx) > 14;
+
+      if (!isClearlyHorizontal) return;
 
       const rect = el.getBoundingClientRect();
       const pointerInside =
@@ -35,11 +40,10 @@ export function useHorizontalWheel(containerRef, onDelta, enabled = true) {
         e.clientY >= rect.top &&
         e.clientY <= rect.bottom;
 
-      const inView = rect.top < window.innerHeight && rect.bottom > 0;
-
-      if (!inView || !pointerInside) return;
+      if (!pointerInside) return;
 
       e.preventDefault();
+      e.stopPropagation();
       onDeltaRef.current(dx, e);
     };
 
@@ -48,28 +52,20 @@ export function useHorizontalWheel(containerRef, onDelta, enabled = true) {
   }, [containerRef, enabled]);
 }
 
-/**
- * Step a carousel index when accumulated horizontal wheel delta crosses a threshold.
- */
-export function useHorizontalWheelSteps(
-  containerRef,
-  {
-    onStepLeft,
-    onStepRight,
-    threshold = 60,
-    sensitivity = 1,
-    enabled = true,
-  } = {}
-) {
+export function useHorizontalWheelSteps(containerRef, options = {}) {
   const accumRef = useRef(0);
-  const leftRef = useRef(onStepLeft);
-  const rightRef = useRef(onStepRight);
-  leftRef.current = onStepLeft;
-  rightRef.current = onStepRight;
+  const optsRef = useRef(options);
+  optsRef.current = options;
+
+  const leftRef = useRef(options.onStepLeft);
+  const rightRef = useRef(options.onStepRight);
+  leftRef.current = options.onStepLeft;
+  rightRef.current = options.onStepRight;
 
   useHorizontalWheel(
     containerRef,
     (dx) => {
+      const { threshold = 60, sensitivity = 1 } = optsRef.current;
       accumRef.current += dx * sensitivity;
       if (accumRef.current >= threshold) {
         accumRef.current = 0;
@@ -79,6 +75,6 @@ export function useHorizontalWheelSteps(
         leftRef.current?.();
       }
     },
-    enabled
+    options.enabled ?? true
   );
 }

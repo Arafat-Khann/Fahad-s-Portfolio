@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import ProjectModal from './ProjectModal';
 import './Projects.css';
 
@@ -128,6 +128,19 @@ export default function Projects() {
     setOriginRect(null);
   };
 
+  const scrollToCard = useCallback((direction) => {
+    const nextIndex = Math.max(
+      0,
+      Math.min(projects.length - 1, focusedIndex + direction),
+    );
+
+    cardRefs.current[nextIndex]?.scrollIntoView({
+      behavior: 'smooth',
+      inline: 'center',
+      block: 'nearest',
+    });
+  }, [focusedIndex]);
+
   return (
     <section id="projects" className="projects-section">
       <div className="projects-inner">
@@ -138,7 +151,6 @@ export default function Projects() {
         <div
           ref={viewportRef}
           className="projects-scroll-viewport"
-          data-lenis-prevent
           aria-label="Selected works carousel"
         >
           <div className="projects-scroll-track">
@@ -190,6 +202,28 @@ export default function Projects() {
             })}
             <div className="projects-scroll-spacer" aria-hidden="true" />
           </div>
+        </div>
+
+        <div className="projects-nav" aria-label="Selected works navigation">
+          <button
+            type="button"
+            className="projects-nav-button"
+            onClick={() => scrollToCard(-1)}
+            aria-label="Previous project"
+            disabled={focusedIndex === 0}
+          >
+            <ChevronLeft size={22} />
+          </button>
+
+          <button
+            type="button"
+            className="projects-nav-button"
+            onClick={() => scrollToCard(1)}
+            aria-label="Next project"
+            disabled={focusedIndex === projects.length - 1}
+          >
+            <ChevronRight size={22} />
+          </button>
         </div>
       </div>
 

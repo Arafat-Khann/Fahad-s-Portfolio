@@ -5,6 +5,7 @@
   justify-content: center;
   padding: 10% 5%;
   background: var(--color-surface-1);
+  position: relative;
 }
 
 .about-content {
@@ -26,7 +27,7 @@
 
 .about-knight {
   justify-self: end;
-  width: min(24vw, 320px);
+  width: min(26vw, 340px);
   aspect-ratio: 1 / 1.35;
   position: relative;
   margin-right: clamp(0rem, 2vw, 1rem);
@@ -45,7 +46,7 @@
 
   .about-knight {
     justify-self: start;
-    width: min(52vw, 320px);
+    width: min(56vw, 340px);
     aspect-ratio: 1 / 1.28;
     margin-right: 0;
   }
@@ -53,7 +54,7 @@
 
 @media (max-width: 640px) {
   .about-knight {
-    width: min(76vw, 280px);
+    width: min(80vw, 300px);
     aspect-ratio: 1 / 1.22;
   }
 }

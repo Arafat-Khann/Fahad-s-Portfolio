@@ -47,13 +47,28 @@
 }
 
 .lead-row {
-  overflow: hidden;
+  /* keep horizontal overflow clipped but allow vertical overflow so
+     transformed/scaled hero cards won't be visually cut off */
+  overflow-x: hidden;
+  overflow-y: visible;
   width: 100%;
   padding-left: var(--lead-gutter);
 }
 
 .lead-row-hero {
   margin-bottom: 10px;
+}
+
+/* ensure the stage has bottom padding on narrow screens so hero cards
+   and mini cards have breathing room and aren't clipped */
+@media (max-width: 767px) {
+  .leadership-stage {
+    padding-bottom: 1.25rem;
+  }
+
+  .lead-row {
+    padding-bottom: 0.6rem;
+  }
 }
 
 .lead-track {

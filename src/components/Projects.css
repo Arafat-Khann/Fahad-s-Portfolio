@@ -247,6 +247,38 @@
     padding: 1.35rem;
   }
 
+  /* Improve spacing and readability on narrow screens */
+  .project-card-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    gap: 0.5rem;
+  }
+
+  .project-top {
+    margin-bottom: 0.5rem;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .project-title {
+    font-size: 1.05rem;
+    line-height: 1.15;
+    margin-bottom: 0.35rem;
+  }
+
+  .project-desc {
+    font-size: 0.88rem;
+    line-height: 1.45;
+    margin-bottom: 0.85rem;
+    max-width: 100%;
+  }
+
+  .project-tech {
+    justify-content: flex-start;
+  }
+
   .project-card.focused {
     transform: scale(1.03) translateY(0);
   }

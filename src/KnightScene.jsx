@@ -45,6 +45,9 @@ class KnightSceneController {
       bloomStrength: options.bloomStrength ?? 0.42,
       bloomRadius: options.bloomRadius ?? 0.55,
       dof: options.dof ?? true,
+      antialias: options.antialias ?? true,
+      powerPreference: options.powerPreference ?? 'high-performance',
+      useComposer: options.useComposer !== undefined ? options.useComposer : true,
       ...options,
     };
 
@@ -62,16 +65,13 @@ class KnightSceneController {
 
     this.scene = createScene();
     this.camera = createCamera();
-    this.renderer = createRenderer(canvas);
+    this.renderer = createRenderer(canvas, this.options);
     this.material = createMaterial();
     this.lights = setupLights(this.scene);
     this._env = setupEnvironment(this.renderer, this.scene);
-    this.composer = setupPostProcessing(
-      this.renderer,
-      this.scene,
-      this.camera,
-      this.options,
-    );
+    this.composer = this.options.useComposer
+      ? setupPostProcessing(this.renderer, this.scene, this.camera, this.options)
+      : null;
     setupInteraction(this);
 
     this._onResize = () => this.resize();
@@ -109,11 +109,11 @@ class KnightSceneController {
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height, false);
-    this.composer.setSize(width, height);
+    if (this.composer) this.composer.setSize(width, height);
 
     const pixelRatio = this.options.pixelRatio;
     this.renderer.setPixelRatio(pixelRatio);
-    this.composer.setPixelRatio(pixelRatio);
+    if (this.composer) this.composer.setPixelRatio(pixelRatio);
     updateSpinScreenDirection(this);
   }
 
@@ -130,7 +130,7 @@ class KnightSceneController {
     this.material.dispose();
     this.material.normalMap?.dispose();
     this.renderer.dispose();
-    this.composer.dispose();
+    if (this.composer) this.composer.dispose();
     this._env?.dispose?.();
     this.lights.forEach((light) => light.dispose?.());
   }
@@ -149,12 +149,12 @@ function createCamera() {
   return camera;
 }
 
-function createRenderer(canvas) {
+function createRenderer(canvas, options = {}) {
   const renderer = new THREE.WebGLRenderer({
     canvas,
     alpha: true,
-    antialias: true,
-    powerPreference: 'high-performance',
+    antialias: options.antialias !== undefined ? options.antialias : true,
+    powerPreference: options.powerPreference ?? 'high-performance',
   });
   renderer.setClearColor(0x000000, 0);
   renderer.autoClear = true;
@@ -473,20 +473,25 @@ export default function KnightScene() {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (isMobile) return undefined;
     if (!canvas) return undefined;
 
-    const controller = new KnightSceneController(canvas);
+    const mobileOptions = {
+      pixelRatio: Math.min(window.devicePixelRatio, 1),
+      bloomStrength: 0.12,
+      bloomRadius: 0.25,
+      dof: false,
+      antialias: false,
+      powerPreference: 'low-power',
+      useComposer: false,
+    };
+
+    const options = isMobile ? mobileOptions : undefined;
+    const controller = new KnightSceneController(canvas, options);
     return () => controller.dispose();
   }, [isMobile]);
 
-  if (isMobile) {
-    return (
-      <div className="knight-scene-fallback" aria-hidden="true">
-        3D preview disabled for smaller screens
-      </div>
-    );
-  }
-
+  // Always render the canvas. On mobile we initialize the controller with
+  // lower-cost options so the model still appears but with reduced quality
+  // and no expensive post-processing.
   return <canvas ref={canvasRef} className="knight-scene-canvas" />;
 }

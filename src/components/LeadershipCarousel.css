@@ -683,6 +683,59 @@
   }
 }
 
+/* Stacked layout: hero fully above minis for narrow phones */
+@media (max-width: 479px) {
+  .lead-row-hero {
+    display: flex;
+    justify-content: center;
+    padding-left: 0;
+    padding-right: var(--lead-gutter);
+  }
+
+  /* Disable JS translate for hero track on stacked phones and center cards */
+  .lead-track-hero {
+    transform: none !important;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+    padding-right: var(--lead-gutter);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .lead-hero-card {
+    margin: 0 6px;
+    flex: 0 0 auto;
+  }
+
+  .lead-row-mini {
+    margin-top: 0.8rem;
+    padding-left: 0;
+    padding-right: var(--lead-gutter);
+  }
+
+  .lead-track-mini {
+    transform: none !important;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
+    padding-right: var(--lead-gutter);
+  }
+
+  .lead-mini-card {
+    width: calc(50% - 8px);
+    min-width: 120px;
+    margin: 0;
+    height: auto;
+    aspect-ratio: unset;
+  }
+
+  .lead-controls { justify-content: center; }
+}
+
 /* Ensure parent allows vertical overflow on small screens so scaled
    hero cards aren't visually cut off by the section's overflow:hidden */
 @media (max-width: 767px) {

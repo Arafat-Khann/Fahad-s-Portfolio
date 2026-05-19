@@ -668,6 +668,35 @@
   }
 }
 
+/* Very narrow phones: stack mini cards vertically for clarity */
+@media (max-width: 360px) {
+  .lead-track-mini {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+    transform: none !important;
+  }
+
+  .lead-mini-card {
+    width: 100% !important;
+    min-width: 0;
+    margin-right: 0;
+    height: auto;
+    aspect-ratio: unset;
+  }
+
+  .lead-row-mini {
+    padding-left: 0;
+    padding-right: var(--lead-gutter);
+  }
+
+  .lead-hero-card {
+    width: min(86vw, 260px);
+    margin-bottom: 0.8rem;
+  }
+}
+
 /* Modal + motion preferences */
 @media (max-width: 767px) {
   .lead-modal-backdrop {

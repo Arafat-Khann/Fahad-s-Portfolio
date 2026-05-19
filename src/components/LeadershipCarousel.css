@@ -637,6 +637,35 @@
   .lead-dot.is-active {
     width: 22px;
   }
+
+  /* Center hero + mini tracks on small phones and remove left gutter
+     so cards appear visually centered under the section title. */
+  .lead-row {
+    padding-left: 0;
+  }
+
+  .lead-track {
+    width: 100%;
+    justify-content: center;
+    padding-right: var(--lead-gutter);
+    gap: 10px;
+  }
+
+  .lead-row-hero {
+    margin-bottom: 0.9rem;
+  }
+
+  /* Make mini cards align center and allow two per row if space constrained */
+  .lead-mini-card {
+    min-width: 44%;
+    width: min(46vw, 160px);
+    margin-right: 8px;
+  }
+
+  .lead-hero-card {
+    width: min(84vw, 260px);
+    height: min(56vw, 300px);
+  }
 }
 
 /* Modal + motion preferences */

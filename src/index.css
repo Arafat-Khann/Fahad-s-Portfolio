@@ -53,8 +53,37 @@ html, body {
 
 main {
   width: 100%;
-  max-width: 2560px;
+  max-width: 100%;
   margin: 0 auto;
+}
+
+/* Make images, canvases and media responsive by default */
+img, picture, video, canvas {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Knight scene fallback for small screens */
+.knight-scene-canvas {
+  width: 100%;
+  height: min(40vh, 360px);
+  max-height: 420px;
+  display: block;
+}
+
+.knight-scene-fallback {
+  width: 100%;
+  height: min(40vh, 360px);
+  max-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, rgba(20,58,90,0.06), rgba(52,103,140,0.04));
+  color: var(--color-text-secondary);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: var(--shadow-sm);
 }
 
 /* Subtle Noise Texture Overlay */

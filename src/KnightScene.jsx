@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
@@ -452,20 +452,41 @@ function updateMotion(ctx, elapsedTime, deltaTime) {
 
 export default function KnightScene() {
   const canvasRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia?.('(max-width: 639px)');
+    const onChange = () => setIsMobile(mq?.matches ?? false);
+    if (mq) {
+      onChange();
+      if (mq.addEventListener) mq.addEventListener('change', onChange);
+      else mq.addListener(onChange);
+      return () => {
+        if (mq.removeEventListener) mq.removeEventListener('change', onChange);
+        else mq.removeListener(onChange);
+      };
+    }
+
+    setIsMobile(window.innerWidth <= 639);
+    return undefined;
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-
-    if (!canvas) {
-      return undefined;
-    }
+    if (isMobile) return undefined;
+    if (!canvas) return undefined;
 
     const controller = new KnightSceneController(canvas);
+    return () => controller.dispose();
+  }, [isMobile]);
 
-    return () => {
-      controller.dispose();
-    };
-  }, []);
+  if (isMobile) {
+    return (
+      <div className="knight-scene-fallback" aria-hidden="true">
+        3D preview disabled for smaller screens
+      </div>
+    );
+  }
 
   return <canvas ref={canvasRef} className="knight-scene-canvas" />;
 }

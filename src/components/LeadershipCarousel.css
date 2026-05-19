@@ -683,6 +683,21 @@
   }
 }
 
+/* Ensure parent allows vertical overflow on small screens so scaled
+   hero cards aren't visually cut off by the section's overflow:hidden */
+@media (max-width: 767px) {
+  .leadership-section {
+    overflow: visible;
+    padding-bottom: 3.25rem;
+  }
+
+  /* Slightly reduce hero scale when not active to avoid excessive height */
+  .lead-hero-card:not(.is-active) {
+    transform: scale(0.92);
+    opacity: 0.72;
+  }
+}
+
 /* Very narrow phones: stack mini cards vertically for clarity */
 @media (max-width: 360px) {
   .lead-track-mini {

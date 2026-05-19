@@ -54,7 +54,12 @@
 
 @media (max-width: 640px) {
   .about-knight {
-    width: min(80vw, 300px);
-    aspect-ratio: 1 / 1.22;
+    width: min(84vw, 340px);
+    aspect-ratio: 1 / 1.1;
+    justify-self: center;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

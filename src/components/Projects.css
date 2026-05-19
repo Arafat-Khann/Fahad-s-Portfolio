@@ -243,8 +243,10 @@
 
   .project-card {
     flex: 0 0 min(82vw, 280px);
-    height: min(62vw, 320px);
-    padding: 1.35rem;
+    /* slightly increase height and bottom padding to avoid clipping tech pills */
+    height: min(66vw, 340px);
+    padding: 1.35rem 1.35rem 1.6rem;
+    box-sizing: border-box;
   }
 
   /* Improve spacing and readability on narrow screens */
@@ -277,6 +279,11 @@
 
   .project-tech {
     justify-content: flex-start;
+  }
+
+  /* small buffer so pills never touch the rounded edge */
+  .project-tech {
+    padding-bottom: 0.25rem;
   }
 
   .project-card.focused {

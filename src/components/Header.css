@@ -32,14 +32,13 @@
 
 /* Mobile menu toggle */
 .site-menu-toggle {
-  display: none;
   margin-left: auto;
   width: 44px;
   height: 36px;
   border-radius: 8px;
   background: rgba(255,255,255,0.7);
   border: 1px solid rgba(0,0,0,0.06);
-  display: inline-flex;
+  display: none;
   align-items: center;
   justify-content: center;
 }

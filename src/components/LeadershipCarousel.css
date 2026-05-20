@@ -704,9 +704,20 @@
     -webkit-overflow-scrolling: touch;
   }
 
+  /* Only show the active hero card on phones so it is never clipped */
   .lead-hero-card {
-    margin: 0 6px;
+    display: none;
+    margin: 0;
     flex: 0 0 auto;
+  }
+
+  .lead-hero-card.is-active {
+    display: block;
+    width: min(86vw, 280px);
+    height: min(58vw, 320px);
+    transform: none;
+    opacity: 1;
+    margin: 0 auto;
   }
 
   .lead-row-mini {

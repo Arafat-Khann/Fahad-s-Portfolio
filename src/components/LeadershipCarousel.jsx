@@ -176,7 +176,6 @@ export default function LeadershipCarousel() {
       <div className="leadership-wrap">
         <div className="leadership-header">
           <p className="leadership-kicker">Leadership Activities</p>
-          <h2 className="leadership-title">A sequence of leadership moments</h2>
         </div>
 
         <motion.div

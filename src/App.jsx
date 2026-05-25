@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSmoothScroll } from './hooks/useSmoothScroll';
 import Header from './components/Header';
 import CustomCursor from './components/CustomCursor';
@@ -14,6 +14,26 @@ import Contact from './components/Contact';
 function App() {
   // Initialize Lenis smooth scroll
   useSmoothScroll();
+
+  useEffect(() => {
+    const scrollToTop = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    };
+
+    scrollToTop();
+
+    const onPageShow = (event) => {
+      if (event.persisted) {
+        scrollToTop();
+      }
+    };
+
+    window.addEventListener('pageshow', onPageShow);
+
+    return () => {
+      window.removeEventListener('pageshow', onPageShow);
+    };
+  }, []);
 
   return (
     <>

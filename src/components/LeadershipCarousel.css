@@ -16,7 +16,7 @@
 
 .leadership-header {
   text-align: center;
-  margin-bottom: clamp(0.9rem, 2vw, 1.35rem);
+  margin-bottom: clamp(0.45rem, 1vw, 0.75rem);
 }
 
 .leadership-kicker {
@@ -42,9 +42,9 @@
   overflow: hidden;
   box-shadow: 0 26px 60px rgba(20, 58, 90, 0.12);
   border: 1px solid rgba(20, 58, 90, 0.08);
-  min-height: clamp(250px, 36vw, 430px);
+  min-height: clamp(420px, 56vw, 700px);
   background: linear-gradient(180deg, #ffffff 0%, #f3f5f8 100%);
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.6rem;
 }
 
 .leadership-visual {
@@ -336,6 +336,89 @@
   margin-top: 0.95rem;
 }
 
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .leadership-section {
+    padding: clamp(2.3rem, 3.6vw, 3.8rem) 5%;
+  }
+
+  .leadership-header {
+    margin-bottom: 0.5rem;
+  }
+
+  .leadership-title {
+    font-size: clamp(1.45rem, 2.5vw, 2.1rem);
+  }
+
+  .leadership-media-shell {
+    min-height: clamp(300px, 32vw, 420px);
+    margin-bottom: 0.45rem;
+  }
+
+  .leadership-visual-card {
+    width: min(420px, calc(100% - 1.2rem));
+    padding: 0.9rem 1rem;
+    bottom: 0.85rem;
+    left: 0.85rem;
+  }
+
+  .leadership-visual-title {
+    font-size: clamp(1.25rem, 1.9vw, 1.8rem);
+    margin-bottom: 0.25rem;
+  }
+
+  .leadership-visual-label {
+    font-size: 0.88rem;
+  }
+
+  .leadership-bar-shell {
+    gap: 0.45rem;
+    margin-bottom: 0.55rem;
+  }
+
+  .leadership-arrow {
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 9px;
+  }
+
+  .leadership-tab {
+    min-height: 2.85rem;
+    padding: 0.42rem 0.78rem 0.38rem;
+  }
+
+  .leadership-tab-label {
+    font-size: 0.8rem;
+  }
+
+  .leadership-copy-box {
+    padding: 0.9rem 1rem 0.95rem;
+  }
+
+  .leadership-copy-meta {
+    margin-bottom: 0.55rem;
+  }
+
+  .leadership-copy-title {
+    font-size: clamp(1.05rem, 1.55vw, 1.45rem);
+    margin-bottom: 0.4rem;
+  }
+
+  .leadership-copy-description {
+    font-size: 0.9rem;
+    line-height: 1.52;
+  }
+
+  .leadership-copy-highlights {
+    margin-top: 0.65rem;
+    gap: 0.4rem;
+  }
+
+  .leadership-highlight-pill {
+    padding: 0.38rem 0.62rem;
+    font-size: 0.72rem;
+  }
+}
+
 .leadership-highlight-pill {
   padding: 0.55rem 0.85rem;
   border-radius: 0;
@@ -363,7 +446,7 @@
   }
 
   .leadership-media-shell {
-    min-height: 285px;
+    min-height: 380px;
     border-radius: 26px;
   }
 

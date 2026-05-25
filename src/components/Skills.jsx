@@ -2,11 +2,7 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import './Skills.css';
 
-const skills = [
-  "Python", "JavaScript", "TypeScript", "React",
-  "Next.js", "Node.js", "SQL", "Git",
-  "REST APIs", "Machine Learning", "NLP", "LLMs"
-];
+import { skills as skillsData } from '../data/portfolioData';
 
 export default function Skills() {
   const containerRef = useRef(null);
@@ -17,13 +13,16 @@ export default function Skills() {
 
   const y = useTransform(scrollYProgress, [0, 1], [100, -50]);
   const opacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
+  // Flatten skills for display
+  const allSkills = Object.values(skillsData).flat();
+
 
   return (
     <section id="skills" ref={containerRef} className="skills-section">
       <motion.div style={{ y, opacity }} className="skills-container">
         <h2 className="section-title">Core Competencies</h2>
         <div className="skills-grid">
-          {skills.map((skill, index) => (
+          {allSkills.map((skill, index) => (
             <motion.div
               key={skill}
               className="skill-item"

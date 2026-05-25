@@ -3,68 +3,7 @@ import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import ProjectModal from './ProjectModal';
 import './Projects.css';
 
-const projects = [
-  {
-    id: 1,
-    title: "AI Resume Analyzer",
-    category: "Machine Learning / NLP",
-    description: "An intelligent system that scores resumes against job descriptions using fine-tuned NLP models, providing actionable feedback.",
-    tech: ["Python", "Transformers", "FastAPI", "React"],
-    highlights: [
-      "Fine-tuned transformer models for semantic resume matching",
-      "Reduced manual screening time by 40% in pilot deployments",
-      "REST API with React dashboard for recruiter workflows"
-    ],
-    liveUrl: "#",
-    githubUrl: "#",
-    image: null,
-  },
-  {
-    id: 2,
-    title: "Smart Productivity System",
-    category: "Full-Stack AI",
-    description: "AI-assisted task planning application that auto-categorizes and prioritizes daily workloads based on historical context.",
-    tech: ["TypeScript", "Next.js", "OpenAI API", "PostgreSQL"],
-    highlights: [
-      "Context-aware prioritization using LLM embeddings",
-      "Real-time sync across devices with PostgreSQL",
-      "Modular Next.js architecture for rapid iteration"
-    ],
-    liveUrl: "#",
-    githubUrl: "#",
-    image: null,
-  },
-  {
-    id: 3,
-    title: "Analytics Dashboard",
-    category: "Data Visualization",
-    description: "High-performance dashboard rendering complex datasets with custom WebGL visualizations and real-time WebSocket updates.",
-    tech: ["React", "Three.js", "Node.js", "Redis"],
-    highlights: [
-      "WebGL-powered charts for million-row datasets",
-      "WebSocket pipeline for sub-second data refresh",
-      "Redis caching layer for query optimization"
-    ],
-    liveUrl: "#",
-    githubUrl: "#",
-    image: null,
-  },
-  {
-    id: 4,
-    title: "Automated Support Bot",
-    category: "Conversational AI",
-    description: "A context-aware support chatbot deployed across multiple messaging platforms, resolving 60% of Tier 1 queries automatically.",
-    tech: ["Python", "LangChain", "Vector DB", "Docker"],
-    highlights: [
-      "RAG pipeline with vector search over knowledge base",
-      "Multi-channel deployment via Docker containers",
-      "60% Tier-1 query resolution without human handoff"
-    ],
-    liveUrl: "#",
-    githubUrl: "#",
-    image: null,
-  }
-];
+import { projects } from '../data/portfolioData';
 
 export default function Projects() {
   const viewportRef = useRef(null);
@@ -176,7 +115,7 @@ export default function Projects() {
                 >
                   <div className="project-card-inner">
                     <div className="project-top">
-                      <span className="project-category">{project.category}</span>
+                      <span className="project-category">{project.type}</span>
                       <button
                         type="button"
                         className="project-link"

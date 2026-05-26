@@ -57,7 +57,7 @@
 .leadership-two-hero-card {
 	position: relative;
 	border: 0;
-	border-radius: 0;
+	border-radius: 28px;
 	overflow: hidden;
 	min-height: 0;
 	color: #f7fbff;
@@ -73,7 +73,7 @@
 
 .leadership-two-hero-card-active {
 	height: 100%;
-	border-radius: 0;
+	border-radius: 28px;
 	box-shadow: 0 32px 72px rgba(4, 10, 20, 0.36);
 }
 
@@ -271,7 +271,7 @@
 	position: relative;
 	aspect-ratio: 16 / 9;
 	border: 0;
-	border-radius: 0;
+	border-radius: 22px;
 	scroll-snap-align: center;
 	scroll-snap-stop: always;
 	overflow: hidden;

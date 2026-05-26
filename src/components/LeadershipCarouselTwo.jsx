@@ -76,9 +76,9 @@ function wrapIndex(index, total) {
 	return (index + total) % total;
 }
 
+
 export default function LeadershipCarouselTwo() {
 	const [activeIndex, setActiveIndex] = useState(0);
-	const [direction, setDirection] = useState(1);
 	const [detailsOpen, setDetailsOpen] = useState(false);
 	const sectionRef = useRef(null);
 	const previewRailRef = useRef(null);
@@ -158,12 +158,11 @@ export default function LeadershipCarouselTwo() {
 	}, []);
 
 	const goTo = useCallback(
-		(index, shouldSync = true, navDirection = 1) => {
+		(index, shouldSync = true) => {
 			const nextIndex = wrapIndex(index, total);
 			const isWrapJump =
 				(activeIndex === total - 1 && nextIndex === 0) ||
 				(activeIndex === 0 && nextIndex === total - 1);
-			setDirection(navDirection);
 			setActiveIndex(nextIndex);
 			setDetailsOpen(false);
 			// prevent parallax transform from conflicting with framer animations
@@ -208,7 +207,7 @@ export default function LeadershipCarouselTwo() {
 
 			setActiveIndex((current) => {
 				if (current === closestIndex) return current;
-				setDirection(closestIndex > current ? 1 : -1);
+				// direction removed; update active index only
 				setDetailsOpen(false);
 				return closestIndex;
 			});

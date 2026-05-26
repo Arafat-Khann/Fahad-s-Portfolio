@@ -8,6 +8,7 @@ import Experience from './components/Experience';
 import Projects from './components/Projects';
 import Skills from './components/Skills';
 import LeadershipCarousel from './components/LeadershipCarousel';
+import LeadershipCarouselTwo from './components/LeadershipCarouselTwo';
 import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
 
@@ -46,6 +47,7 @@ function App() {
         <Projects />
         <Skills />
         <LeadershipCarousel />
+        <LeadershipCarouselTwo />
         <Testimonials />
         <Contact />
       </main>

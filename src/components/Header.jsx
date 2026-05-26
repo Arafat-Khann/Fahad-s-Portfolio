@@ -10,6 +10,7 @@ export default function Header() {
     { label: 'Projects', href: '#projects' },
     { label: 'Skills', href: '#skills' },
     { label: 'Leadership Activities', href: '#leadership' },
+    { label: 'Leadership Activities #2', href: '#leadership-two' },
     { label: 'Testimonials', href: '#testimonials' },
     { label: 'Connect', href: '#contact', cta: true },
   ];

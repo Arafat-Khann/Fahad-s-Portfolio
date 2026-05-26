@@ -282,9 +282,9 @@ export default function LeadershipCarouselTwo() {
 			const absX = Math.abs(event.deltaX);
 			const absY = Math.abs(event.deltaY);
 			if (absX === 0 && absY === 0) return;
+			if (absY > absX) return;
 
-			const useHorizontalAxis = absX >= absY;
-			const delta = useHorizontalAxis ? event.deltaX : event.deltaY;
+			const delta = event.deltaX;
 			if (Math.abs(delta) < 12) return;
 
 			event.preventDefault();
@@ -313,9 +313,9 @@ export default function LeadershipCarouselTwo() {
 			const absX = Math.abs(event.deltaX);
 			const absY = Math.abs(event.deltaY);
 			if (absX === 0 && absY === 0) return;
+			if (absY > absX) return;
 
-			const useHorizontalAxis = absX >= absY;
-			const delta = useHorizontalAxis ? event.deltaX : event.deltaY;
+			const delta = event.deltaX;
 			if (Math.abs(delta) < 12) return;
 
 			const atStart = rail.scrollLeft <= 0;
